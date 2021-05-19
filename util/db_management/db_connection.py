@@ -1,6 +1,5 @@
-# rename this file to db_connection.py
-
 from pymongo import MongoClient
+import os
 
 
 def connect_to_db(table_name):
@@ -8,7 +7,10 @@ def connect_to_db(table_name):
         Utility, connects to the database
         :return: MongoDB cursor object
     """
-    mongo = MongoClient("add-your-mongo-uri")
+    # heroku config:set API_KEY=your-mongo-uri
+
+    mongo_uri = os.getenv('mongo_uri')
+    mongo = MongoClient(mongo_uri)
 
     if table_name == "links": 
         return mongo.LinkRollDB.Links
