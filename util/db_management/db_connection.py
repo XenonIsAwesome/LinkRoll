@@ -7,7 +7,7 @@ def connect_to_db(table_name):
         Utility, connects to the database
         :return: MongoDB cursor object
     """
-    # heroku config:set API_KEY=your-mongo-uri
+    # heroku config:set MONGO_URI=your-mongo-uri
 
     mongo_uri = os.getenv('MONGO_URI')
     mongo = MongoClient(mongo_uri)
