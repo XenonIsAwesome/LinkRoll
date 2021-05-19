@@ -133,4 +133,4 @@ def custom():
         return render_template('after.html', link_code=custom_url)
 
 
-app.run(host='localhost', port=5000)
+# app.run(host='localhost', port=5000)
