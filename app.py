@@ -80,10 +80,10 @@ def register():
         u = User()
         success = u.register(username, passwd)
 
-        if success:
+        if success == True:
             session["username"] = u.username
             return redirect(url_for("index"))
-        return render_template('register.html', err="Couldn't register.")
+        return render_template('register.html', err=success)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -97,10 +97,10 @@ def login():
         u = User()
         success = u.login(username, passwd)
 
-        if success:
+        if success == True:
             session["username"] = u.username
             return redirect(url_for("index"))
-        return render_template('login.html', err="Couldn't login.")
+        return render_template('login.html', err=success)
 
 
 @app.route('/logout')

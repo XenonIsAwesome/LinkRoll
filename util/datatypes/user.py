@@ -23,15 +23,19 @@ class User:
             self.passwd_hash = passwd_hash
 
             return True
-        return False
+        return "Your username didn't match the password or it doesn't exist"
     
     def register(self, username:str, passwd:str) -> None:
         username_check = re.match(r"[a-zA-z0-9]{4,32}", username)
         passwd_check = re.match(r"[a-zA-z0-9]{8,32}", passwd)
-        exists_check = self.users_db.find_one({'username': self.username})
+        exists_check = self.users_db.find_one({'username': username})
 
-        if not username_check or not passwd_check or exists_check:
-            return False
+        if not username_check:
+            return "Your username doesn't fit the requirements (Only letters and digits, 4-32 characters long)"
+        if not passwd_check:
+            return "Your password doesn't fit the requirements (Only letters and digits, 8-32 characters long)"
+        if exists_check:
+            return "This username already exists"
 
         passwd_hash = sha256(passwd.encode("UTF-8")).hexdigest()
         
