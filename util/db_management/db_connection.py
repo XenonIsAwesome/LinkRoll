@@ -9,7 +9,7 @@ def connect_to_db(table_name):
     """
     # heroku config:set API_KEY=your-mongo-uri
 
-    mongo_uri = os.getenv('mongo_uri')
+    mongo_uri = os.getenv('MONGO_URI')
     mongo = MongoClient(mongo_uri)
 
     if table_name == "links": 
