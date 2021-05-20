@@ -12,8 +12,8 @@ VERSION = "v" + VERSION
 app = Flask(__name__)
 
 # heroku config:set APP_KEY=your-secret-key
-# app_key = os.getenv('APP_KEY') 
-app.secret_key = "youknowtherulesandsodoi" # app_key
+app_key = os.getenv('APP_KEY') 
+app.secret_key = app_key
 
 app.config['SESSION_TYPE'] = 'filesystem'
 
