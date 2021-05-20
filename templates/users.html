@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% block content %} {% if users_len == 0 %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/after.css') }}" media="screen">
+<p class="u-align-center u-custom-font u-font-ubuntu u-text u-text-2">No users in the database</p>
+{% else %}
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-sm table-light ">
+        <thead>
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Is admin</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i, user in users %}
+            <tr>
+                <th scope="row">{{ user['username'] }}</th>
+                {% if user['is_admin'] %}
+                <td>✔️</td>
+                {% else %}
+                <td>❌</td>
+                {% endif %}
+
+                <td><a href="/delete_user?id={{i}}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+{% endif %} {% endblock %}

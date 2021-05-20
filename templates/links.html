@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% block content %} {% if links_len == 0 %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/after.css') }}" media="screen">
+<p class="u-align-center u-custom-font u-font-ubuntu u-text u-text-2">No links in the database</p>
+{% else %}
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-sm table-light ">
+        <thead>
+            <tr>
+                <th scope="col">Link Code</th>
+                <th scope="col">Discord Link</th>
+                <th scope="col">User Link</th>
+                <th scope="col">Custom User</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i, link in links %}
+            <tr>
+                <th scope="row"><a href="/{{ link['link_code'] }}">{{ link['link_code'] }}</a></th>
+                <td>{{ link['discord_link'] }}</td>
+                <td>{{ link['user_link'] }}</td>
+                <td>{{ link['custom_user'] }}</td>
+
+                <td><a href="/delete_link?id={{i}}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+{% endif %} {% endblock %}

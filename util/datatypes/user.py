@@ -7,11 +7,14 @@ class User:
         self.users_db = connect_to_db("users")
         self.username = ""
         self.passwd_hash = ""
+        self.is_admin = False
 
         if username:
-            user_doc = self.users_db.find_one({'username'})
+            user_doc = self.users_db.find_one({'username': username})
             if user_doc:
-                self.login(user_doc["username"], user_doc["passwd"])
+                self.username = username
+                self.passwd_hash = user_doc['passwd_hash']
+                self.is_admin = user_doc['is_admin']
 
     def login(self, username:str, passwd:str) -> bool:
         passwd_hash = sha256(passwd.encode("UTF-8")).hexdigest()
@@ -21,9 +24,10 @@ class User:
         if user_doc:
             self.username = username
             self.passwd_hash = passwd_hash
+            self.is_admin = user_doc['is_admin']
 
-            return True
-        return "Your username didn't match the password or it doesn't exist"
+            return {'success': True, 'err': None}
+        return {'success': False, 'err': "Your username didn't match the password or it doesn't exist"}
     
     def register(self, username:str, passwd:str) -> None:
         username_check = re.match(r"[a-zA-z0-9]{4,32}", username)
@@ -31,20 +35,21 @@ class User:
         exists_check = self.users_db.find_one({'username': username})
 
         if not username_check:
-            return "Your username doesn't fit the requirements (Only letters and digits, 4-32 characters long)"
+            return {'success': False, 'err': "Your username doesn't fit the requirements (Only letters and digits, 4-32 characters long)"}
         if not passwd_check:
-            return "Your password doesn't fit the requirements (Only letters and digits, 8-32 characters long)"
+            return {'success': False, 'err': "Your password doesn't fit the requirements (Only letters and digits, 8-32 characters long)"}
         if exists_check:
-            return "This username already exists"
+            return {'success': False, 'err': "This username already exists"}
 
         passwd_hash = sha256(passwd.encode("UTF-8")).hexdigest()
         
-        self.users_db.insert_one({
-            'username': username,
-            'passwd_hash': passwd_hash
-        })
-
         self.username = username
         self.passwd_hash = passwd_hash
 
-        return True
+        self.users_db.insert_one({
+            'username': self.username,
+            'passwd_hash': self.passwd_hash,
+            'is_admin': self.is_admin
+        })
+
+        return {'success': True, 'err': None}
