@@ -6,7 +6,7 @@ from util.datatypes.user import User
 
 import re, os
 
-VERSION = "1.2.0"
+VERSION = "1.2.2"
 VERSION = "v" + VERSION
 
 app = Flask(__name__)
