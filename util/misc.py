@@ -47,7 +47,8 @@ def insert_code(is_custom, link_code, discord_link, user_link=None, custom_user=
         'link_code': link_code,
         'discord_link': discord_link,
         'user_link': user_link,
-        'custom_user': custom_user
+        'custom_user': custom_user,
+        'visits': 0
     })
 
     return {'success': True, 'err': None, 'link_code': link_code}

@@ -47,6 +47,7 @@ def router(link_code):
     if check_user_agent(request.headers.get('User-Agent')):
         return redirect(doc["discord_link"])
     else:
+        links_tbl.update_one({'link_code': link_code}, {'$inc': {'visits': 1}})
         return redirect(doc["user_link"])
 
 

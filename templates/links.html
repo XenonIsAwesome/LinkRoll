@@ -10,6 +10,7 @@
                 <th scope="col">Discord Link</th>
                 <th scope="col">User Link</th>
                 <th scope="col">Custom User</th>
+                <th scope="col">Visits (by humans)</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -20,6 +21,7 @@
                 <td>{{ link['discord_link'] }}</td>
                 <td>{{ link['user_link'] }}</td>
                 <td>{{ link['custom_user'] }}</td>
+                <td>{{ link['visits'] }}</td>
 
                 <td><a href="/delete_link?id={{i}}">Delete</a></td>
             </tr>
