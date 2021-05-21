@@ -52,3 +52,9 @@ def insert_code(is_custom, link_code, discord_link, user_link=None, custom_user=
 
     return {'success': True, 'err': None, 'link_code': link_code}
 
+
+def check_user_agent(ua: str) -> bool:
+    for social in ['discord', 'twitter', 'whatsapp']:
+        if social in ua.lower():
+            return True
+    return False

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, abort, redirect, session, url_for
 from flask_session import Session 
 from util.db_management.db_connection import connect_to_db
-from util.misc import generate_code, insert_code
+from util.misc import generate_code, insert_code, check_user_agent
 from util.datatypes.user import User
 
 import re, os
@@ -44,7 +44,7 @@ def index():
 def router(link_code):
     doc = links_tbl.find_one({'link_code': link_code})
     if not doc: abort(404)
-    if 'discord' in request.headers.get('User-Agent').lower():
+    if check_user_agent(request.headers.get('User-Agent')):
         return redirect(doc["discord_link"])
     else:
         return redirect(doc["user_link"])
