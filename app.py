@@ -22,6 +22,7 @@ Session(app)
 links_tbl = connect_to_db("links")
 user_tbl = connect_to_db("users")
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == "GET":
@@ -157,6 +158,20 @@ def del_user():
 
             return redirect(url_for('users'))
     return abort(404)
+
+
+@app.errorhandler(400)
+@app.errorhandler(401)
+@app.errorhandler(403)
+@app.errorhandler(404)
+@app.errorhandler(410)
+@app.errorhandler(413)
+@app.errorhandler(451)
+@app.errorhandler(500)
+@app.errorhandler(503)
+@app.errorhandler(504)
+def web_err(e):
+    return render_template('error.html', err_desc=e)
 
 
 # app.run(host='localhost', port=5000, debug=True)
