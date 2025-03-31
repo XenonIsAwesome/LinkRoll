@@ -1,6 +1,6 @@
 from util.db_management.db_connection import connect_to_db
 from hashlib import sha256
-import re
+import re, os
 
 class User:
     def __init__(self, username=None):
@@ -53,3 +53,13 @@ class User:
         })
 
         return {'success': True, 'err': None}
+
+if __name__ == "__main__":
+    u = User()
+    u.is_admin = True
+    
+    passwd = os.getenv("ADMIN_PASS")
+    username = os.getenv("ADMIN_USER")
+    print(f"adding admin user `{username}:{passwd}`")
+    data = u.register(username, passwd)
+    print(data)
