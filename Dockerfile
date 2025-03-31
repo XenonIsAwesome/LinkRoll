@@ -10,5 +10,5 @@ COPY util util
 COPY app.py app.py
 COPY index.html index.html
 
-EXPOSE 8000
+EXPOSE 80
 ENTRYPOINT ["gunicorn", "-b", "0.0.0.0", "app:app"]
